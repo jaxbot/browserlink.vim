@@ -35,15 +35,15 @@ function! s:EvaluateBuffer()
 endfunction
 
 function! s:evaluateJS(js) 
-	call system("curl --data \"" . escape(a:js,"\"") . "\" " . g:bl_serverpath . "/evaluateJS")
+	call system("curl --max-time 1 --data \"" . escape(a:js,"\"") . "\" " . g:bl_serverpath . "/evaluateJS")
 endfunction
 
 function! s:ReloadPage()
-	call system("curl " . g:bl_serverpath . "/reloadPage")
+	call system("curl --max-time 1 " . g:bl_serverpath . "/reloadPage")
 endfunction
 
 function! s:ReloadCSS()
-	call system("curl " . g:bl_serverpath . "/reloadCSS")
+	call system("curl --max-time 1 " . g:bl_serverpath . "/reloadCSS")
 endfunction
 
 function! s:get_visual_selection()
