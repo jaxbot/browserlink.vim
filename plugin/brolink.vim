@@ -19,10 +19,13 @@ if !exists("g:bl_serverpath")
 endif
 
 python <<NOMAS
-import websocket
+import sys
 import threading
 import time
 import vim
+sys.path.append(vim.eval("expand('<sfile>:p:h')") + "/websocket_client-0.11.0-py2.7.egg")
+import websocket
+
 class BrolinkLink(threading.Thread):
 
 	def __init__ (self, ws):
@@ -51,6 +54,7 @@ def disconnect():
 	can_close = 1
 	ws.close()
 NOMAS
+
 
 function! s:EvaluateSelection()
 	call s:evaluateJS(s:get_visual_selection()) 
