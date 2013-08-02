@@ -4,7 +4,7 @@
 // http://github.com/jaxbot/brolink.vim
 
 console.log("Brolink");
-console.log("Server version: 1.0.0");
+console.log("Server version: 2.0.0");
 console.log("======================");
 console.log("Dedicated to everyone who missed the first chest in OOT's Forest Temple");
 console.log("");
@@ -24,6 +24,9 @@ var server = http.createServer(function(request, response) {
 		break;
 		case "/reloadPage":
 			broadcast("___RPAGE");
+		break;
+		case "/reloadTemplate":
+			broadcast("___RTEMPLATE");
 		break;
 		case "/evaluateJS":
 			request.on('data', function(data) {
@@ -67,6 +70,9 @@ wsServer.on('request', function(request) {
     connection.on('close', function(reasonCode, description) {
         console.log("Disconnected: " + connection.remoteAddress);
     });
+	connection.on('message', function(msg) {
+		broadcast(msg.utf8Data);
+	});
 	
 	connections.push(connection);
 });
