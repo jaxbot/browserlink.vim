@@ -48,11 +48,13 @@ can_close = 0
 ws = websocket.WebSocketApp("ws://127.0.0.1:9001/")
 
 thread = BrolinkLink(ws)
-thread.start()
 
 def disconnect():
 	can_close = 1
 	ws.close()
+
+def startbrolink():
+	thread.start()
 NOMAS
 
 
@@ -88,6 +90,10 @@ function! s:Disconnect()
 	python disconnect()
 endfunction
 
+function! s:Connect()
+	python startbrolink()
+endfunction
+
 function! s:get_visual_selection()
   let [lnum1, col1] = getpos("'<")[1:2]
   let [lnum2, col2] = getpos("'>")[1:2]
@@ -95,6 +101,12 @@ function! s:get_visual_selection()
   let lines[-1] = lines[-1][: col2 - 2]
   let lines[0] = lines[0][col1 - 1:]
   return join(lines, " ")
+endfunction
+
+function! s:setupHandlers() 
+    au BufWritePost *.html,*.js,*.php :BLReloadPage
+    "au BufWritePost templates/*.html :BLReloadTemplate
+    au BufWritePost *.css :BLReloadCSS	
 endfunction
 
 command! -range -nargs=0 BLEvaluateSelection call s:EvaluateSelection()
@@ -105,6 +117,7 @@ command!        -nargs=0 BLReloadPage        call s:ReloadPage()
 command!        -nargs=0 BLReloadTemplate    call s:ReloadTemplate()
 command!        -nargs=0 BLReloadCSS         call s:ReloadCSS()
 command!        -nargs=0 BLDisconnect        call s:Disconnect()
+command!        -nargs=0 BLStart             call s:Start()
 
 if !exists("g:bl_no_mappings")
     vmap <silent><Leader>be :BLEvaluateSelection<CR>
@@ -114,10 +127,15 @@ if !exists("g:bl_no_mappings")
     nmap <silent><Leader>bc :BLReloadCSS<CR>
 endif
 
-if !exists("g:bl_no_autoupdate")
-    au BufWritePost *.html,*.js,*.php :BLReloadPage
-    "au BufWritePost templates/*.html :BLReloadTemplate
-    au BufWritePost *.css :BLReloadCSS	
+function! s:Start()
+	if !exists("g:bl_no_autoupdate")
+		call s:setupHandlers()
+	endif
+	call s:Connect()
+endfunction
+
+if !exists("g:bl_no_implystart")
+	call s:Start()
 endif
 
 au VimLeave * :BLDisconnect
