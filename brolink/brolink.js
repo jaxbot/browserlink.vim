@@ -1,3 +1,4 @@
+#!/usr/bin/nodejs
 // Brolink.js
 // The server for brolink.vim
 // By Jonathan Warner, 2013
@@ -12,6 +13,7 @@ console.log("");
 var WebSocketServer = require("websocket").server;
 var http = require("http");
 var fs = require("fs");
+var path = require("path");
 
 var connections = [];
 
@@ -34,7 +36,10 @@ var server = http.createServer(function(request, response) {
 			});
 		break;
 		case "/socket.js":
-			fs.readFile("socket.js", "utf8", function(err,data) {
+			fs.readFile(path.resolve(__dirname,"socket.js"), "utf8", function(err,data) {
+                if (err) {
+                    console.log(err);
+                }
 				response.writeHead(200);
 				response.write(data);
 				response.end();
