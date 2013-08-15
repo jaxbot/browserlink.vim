@@ -40,6 +40,7 @@ var server = http.createServer(function(request, response) {
                 if (err) {
                     console.log(err);
                 }
+				response.setHeader('content-type', 'text/javascript');
 				response.writeHead(200);
 				response.write(data);
 				response.end();
