@@ -128,14 +128,23 @@ if !exists("g:bl_no_mappings")
 endif
 
 function! s:Start()
-	if !exists("g:bl_no_autoupdate")
-		call s:setupHandlers()
-	endif
-	call s:Connect()
+  if !exists("g:bl_no_autoupdate")
+    if has('mac')
+      silent !open '%:p'
+      redraw!
+    endif
+    if has('win32')
+      silent !cmd 'start %:p'
+      redraw!
+    endif
+  call s:setupHandlers()
+  endif
+  au VimLeave * :BLDisconnect
+  call s:Connect()
 endfunction
 
 if !exists("g:bl_no_implystart")
-	call s:Start()
+    call s:Start()
 endif
 
-au VimLeave * :BLDisconnect
+command Brolink call <SID>Start()
