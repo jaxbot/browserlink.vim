@@ -1,5 +1,5 @@
 " File:        brolink.vim
-" Version:     2.0.0
+" Version:     2.1.0
 " Description: Links VIM to your browser for live/responsive editing.
 " Maintainer:  Jonathan Warner <jaxbot@gmail.com> <http://github.com/jaxbot>
 " Homepage:    http://jaxbot.me/
@@ -15,7 +15,7 @@ endif
 let g:bl_loaded = "si"
 
 if !exists("g:bl_serverpath") 
-	let g:bl_serverpath = "http://127.0.0.1:9001"
+	let g:bl_serverpath = "ws://127.0.0.1:9001"
 endif
 
 python <<NOMAS
@@ -33,19 +33,19 @@ class BrolinkLink(threading.Thread):
 		self.ws = ws
 	
 	def run(self):
-		def on_message(ws, message):
-			vim.command("echo '" + message + "'")
 		def on_close(ws):
 			if (can_close == 0):
 				ws.run_forever()
+		def on_error(ws):
+			print "Error with Brolink! Make sure the Brolink Node.js server is running."
 	  
-		#ws.on_message = on_message
 		ws.on_close = on_close
+		ws.on_error = on_error
 		ws.run_forever()
 
 can_close = 0
 
-ws = websocket.WebSocketApp("ws://127.0.0.1:9001/")
+ws = websocket.WebSocketApp(vim.eval("g:bl_serverpath"))
 
 thread = BrolinkLink(ws)
 
@@ -72,10 +72,6 @@ endfunction
 
 function! s:evaluateJS(js) 
 	python ws.send(vim.eval("a:js"))
-endfunction
-
-function! s:ReloadTemplate()
-	python ws.send("___RTEMPLATE")
 endfunction
 
 function! s:ReloadPage()
@@ -105,7 +101,6 @@ endfunction
 
 function! s:setupHandlers() 
     au BufWritePost *.html,*.js,*.php :BLReloadPage
-    "au BufWritePost templates/*.html :BLReloadTemplate
     au BufWritePost *.css :BLReloadCSS	
 endfunction
 
@@ -114,7 +109,6 @@ command!        -nargs=0 BLEvaluateBuffer    call s:EvaluateBuffer()
 command!        -nargs=0 BLEvaluateWord      call s:EvaluateWord()
 command!        -nargs=1 BLEval              call s:evaluateJS(<f-args>)
 command!        -nargs=0 BLReloadPage        call s:ReloadPage()
-command!        -nargs=0 BLReloadTemplate    call s:ReloadTemplate()
 command!        -nargs=0 BLReloadCSS         call s:ReloadCSS()
 command!        -nargs=0 BLDisconnect        call s:Disconnect()
 command!        -nargs=0 BLStart             call s:Start()
@@ -134,8 +128,9 @@ function! s:Start()
 	call s:Connect()
 endfunction
 
-if !exists("g:bl_no_implystart")
+if exists("g:bl_autostart")
 	call s:Start()
 endif
 
 au VimLeave * :BLDisconnect
+
