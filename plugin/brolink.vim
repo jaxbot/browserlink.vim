@@ -47,16 +47,19 @@ class BrolinkLink(threading.Thread):
 
 can_close = 0
 
-ws = websocket.WebSocketApp(vim.eval("g:bl_serverpath"))
-
-thread = BrolinkLink(ws)
-
 def disconnect():
+	global can_close, ws, thread
 	can_close = 1
 	ws.close()
 
 def startbrolink():
+	global can_close, ws, thread
+	can_close = 0
+	ws = websocket.WebSocketApp(vim.eval("g:bl_serverpath"))
+	thread = BrolinkLink(ws)
 	thread.start()
+
+	vim.command("let g:bl_state = 1")
 NOMAS
 
 
