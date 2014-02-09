@@ -18,6 +18,8 @@ if !exists("g:bl_serverpath")
 	let g:bl_serverpath = "ws://127.0.0.1:9001"
 endif
 
+let g:bl_state = 0
+
 python <<NOMAS
 import sys
 import threading
@@ -83,11 +85,17 @@ function! s:ReloadCSS()
 endfunction
 
 function! s:Disconnect()
-	python disconnect()
+    if(g:bl_state == 1)
+	    python disconnect()
+	    let g:bl_state = 0
+	endif
 endfunction
 
 function! s:Connect()
-	python startbrolink()
+    if(g:bl_state == 0)
+	    python startbrolink()
+	    let g:bl_state = 1
+	endif
 endfunction
 
 function! s:get_visual_selection()
