@@ -114,3 +114,7 @@ Now, just excute `$ brolink.js` in the terminal.
 ## Notes
 
 This is an experimental project, but it works really well for me, and I hope you enjoy it! I kept the source as simple as possible, and it's pretty easy to edit to your needs. I'm open to any suggestions, too, so let me know.
+
+## Shameless plug
+
+I hack around with Vim plugins, so [follow me](https://github.com/jaxbot) if you're into that kind of stuff (or just want to make my day) ;)
