@@ -87,6 +87,11 @@ function! s:ReloadCSS()
 	python ws.send("___RCSS")
 endfunction
 
+function! s:ReloadSCSS()
+  python time.sleep(1.5)
+	python ws.send("___RCSS")
+endfunction
+
 function! s:Disconnect()
     if(g:bl_state == 1)
 	    python disconnect()
@@ -113,6 +118,7 @@ endfunction
 function! s:setupHandlers() 
     au BufWritePost *.html,*.js,*.php :BLReloadPage
     au BufWritePost *.css :BLReloadCSS	
+    au BufWritePost *.scss,*.sass :BLReloadSCSS	
 endfunction
 
 command! -range -nargs=0 BLEvaluateSelection call s:EvaluateSelection()
@@ -121,6 +127,7 @@ command!        -nargs=0 BLEvaluateWord      call s:EvaluateWord()
 command!        -nargs=1 BLEval              call s:evaluateJS(<f-args>)
 command!        -nargs=0 BLReloadPage        call s:ReloadPage()
 command!        -nargs=0 BLReloadCSS         call s:ReloadCSS()
+command!        -nargs=0 BLReloadSCSS        call s:ReloadSCSS()
 command!        -nargs=0 BLDisconnect        call s:Disconnect()
 command!        -nargs=0 BLStart             call s:Start()
 
