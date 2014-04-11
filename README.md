@@ -15,7 +15,7 @@ Brolink allows you to evaluate buffers or selections of JavaScript directly, or 
 <img src='https://raw.github.com/jaxbot/brolink.vim/master/brolinkjs.gif'>
 
 ## How it works
-Brolink is very simple. The plugin itself hooks autocommands for file changes (and other things) to the provided functions. The functions connect through websockets to a node.js backend, which your webpage connects also to. The entire process happens extremely fast.
+Brolink is very simple. The plugin itself hooks autocommands for file changes (and other things) to the provided functions. The functions connect through HTTP to a node.js backend, which your webpage connects also to. The entire process happens extremely fast.
 
 Video of version 1.0: http://www.youtube.com/watch?v=w4_fkpVQbAQ (old, and much slower than current version)
 
