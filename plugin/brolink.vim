@@ -44,7 +44,13 @@ function! s:evaluateJS(js)
 endfunction
 
 function! s:sendCommand(command)
-	python urllib2.urlopen(vim.eval("g:bl_serverpath") + "/" + vim.eval("a:command"))
+	python <<EOF
+try:
+	urllib2.urlopen(vim.eval("g:bl_serverpath") + "/" + vim.eval("a:command"))
+except:
+	# who cares!
+	pass
+EOF
 endfunction
 
 function! s:get_visual_selection()
