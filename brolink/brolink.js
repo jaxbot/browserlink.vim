@@ -4,8 +4,10 @@
 // By Jonathan Warner, 2014
 // http://github.com/jaxbot/brolink.vim
 
+var VERSION = "2.5.0";
+
 console.log("Brolink");
-console.log("Server version: 2.0.0");
+console.log("Server version: " + VERSION);
 console.log("======================");
 console.log("Dedicated to everyone who missed the first chest in OOT's Forest Temple");
 console.log("");
@@ -19,43 +21,32 @@ var connections = [];
 
 var server = http.createServer(function(request, response) {
 	console.log("Requested: " + request.url);
+	
+	var pieces = request.url.split("/");
 
-	switch (request.url) {
-		case "/reloadCSS":
-			broadcast("___RCSS");
-			break;
-		case "/reloadPage":
-			broadcast("___RPAGE");
-			break;
-		case "/reloadTemplate":
-			broadcast("___RTEMPLATE");
-			break;
-		case "/evaluateJS":
+	switch (pieces[1]) {
+		case "reload":
+			broadcast(pieces[2]);
+			return;
+		case "evaluate":
 			request.on('data', function(data) {
 				broadcast(data);
 			});
-			break;
-		case "/socket.js":
-			fs.readFile(path.resolve(__dirname,"socket.js"), "utf8", function(err,data) {
+			return;
+		case "socket.js":
+			fs.readFile(path.resolve(__dirname, "socket.js"), "utf8", function(err, data) {
 				if (err) {
 					console.log(err);
 				}
 				response.setHeader('content-type', 'text/javascript');
 				response.writeHead(200);
-				response.write(data);
-				response.end();
+				response.end(data);
 			});
 			return;
-			break;
-		default:
-			response.writeHead(404);
-			response.end();
-			return;
-			break;
 	}
 
 	response.writeHead(200);
-	response.end();
+	response.end("Brolink " + VERSION);
 
 });
 
@@ -65,7 +56,7 @@ server.listen(9001, function() {
 
 wsServer = new WebSocketServer({
 	httpServer: server,
-		 autoAcceptConnections: false
+	autoAcceptConnections: false
 });
 
 wsServer.on('request', function(request) {
@@ -77,7 +68,7 @@ wsServer.on('request', function(request) {
 		console.log("Disconnected: " + connection.remoteAddress);
 	});
 	connection.on('message', function(msg) {
-		broadcast(msg.utf8Data);
+		console.log(msg.utf8Data);
 	});
 
 	connections.push(connection);
