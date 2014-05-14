@@ -19,6 +19,8 @@ var path = require("path");
 
 var connections = [];
 
+var consoles = "";
+
 var server = http.createServer(function(request, response) {
 	console.log("Requested: " + request.url);
 	
@@ -42,6 +44,10 @@ var server = http.createServer(function(request, response) {
 				response.writeHead(200);
 				response.end(data);
 			});
+			return;
+		case "console":
+			response.writeHead(200);
+			response.end(consoles);
 			return;
 	}
 
@@ -69,6 +75,7 @@ wsServer.on('request', function(request) {
 	});
 	connection.on('message', function(msg) {
 		console.log(msg.utf8Data);
+		consoles += msg.utf8Data;
 	});
 
 	connections.push(connection);

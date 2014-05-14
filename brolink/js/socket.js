@@ -41,5 +41,14 @@
 			}
 		}
 	}
+
+	var log = console.log;
+	console.log = function(str) {
+		log.call(console, str);
+		var err = (new Error).stack;
+		err = err.replace("Error", "").replace(/\s+at\s/g, '@').replace(/@/g, "\n@");
+
+		socket.send(str + "\n" + err + "\n\n");
+	}
 })();
 
