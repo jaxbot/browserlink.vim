@@ -1,7 +1,7 @@
 #!/usr/bin/nodejs
 // Brolink.js
 // The server for brolink.vim
-// By Jonathan Warner, 2013
+// By Jonathan Warner, 2014
 // http://github.com/jaxbot/brolink.vim
 
 console.log("Brolink");
@@ -18,68 +18,68 @@ var path = require("path");
 var connections = [];
 
 var server = http.createServer(function(request, response) {
-    console.log("Requested: " + request.url);
-		
+	console.log("Requested: " + request.url);
+
 	switch (request.url) {
 		case "/reloadCSS":
 			broadcast("___RCSS");
-		break;
+			break;
 		case "/reloadPage":
 			broadcast("___RPAGE");
-		break;
+			break;
 		case "/reloadTemplate":
 			broadcast("___RTEMPLATE");
-		break;
+			break;
 		case "/evaluateJS":
 			request.on('data', function(data) {
 				broadcast(data);
 			});
-		break;
+			break;
 		case "/socket.js":
 			fs.readFile(path.resolve(__dirname,"socket.js"), "utf8", function(err,data) {
-                if (err) {
-                    console.log(err);
-                }
+				if (err) {
+					console.log(err);
+				}
 				response.setHeader('content-type', 'text/javascript');
 				response.writeHead(200);
 				response.write(data);
 				response.end();
 			});
 			return;
-		break;
+			break;
 		default:
 			response.writeHead(404);
 			response.end();
 			return;
-		break;
+			break;
 	}
-	
+
 	response.writeHead(200);
-    response.end();
-    
+	response.end();
+
 });
 
 server.listen(9001, function() {
-    console.log("Server listening on port 9001");
+	console.log("Server listening on port 9001");
 });
 
 wsServer = new WebSocketServer({
-    httpServer: server,
-    autoAcceptConnections: false
+	httpServer: server,
+		 autoAcceptConnections: false
 });
 
 wsServer.on('request', function(request) {
-    
-    var connection = request.accept('', request.origin);
-    console.log("Connection accepted.");
-	
-    connection.on('close', function(reasonCode, description) {
-        console.log("Disconnected: " + connection.remoteAddress);
-    });
+
+	var connection = request.accept('', request.origin);
+	console.log("Connection accepted.");
+
+	connection.on('close', function(reasonCode, description) {
+		console.log("Disconnected: " + connection.remoteAddress);
+	});
 	connection.on('message', function(msg) {
 		broadcast(msg.utf8Data);
 	});
-	
+
 	connections.push(connection);
 });
 
