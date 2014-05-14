@@ -63,7 +63,7 @@ function! s:get_visual_selection()
 endfunction
 
 function! s:setupHandlers()
-	au BufWritePost *.html,*.js,*.php :BLReloadPage
+	au BufWritePost *.html,*.htm,*.js,*.php :BLReloadPage
 	au BufWritePost *.css :BLReloadCSS	
 endfunction
 
