@@ -33,8 +33,8 @@ var server = http.createServer(function(request, response) {
 				broadcast(data);
 			});
 			return;
-		case "socket.js":
-			fs.readFile(path.resolve(__dirname, "socket.js"), "utf8", function(err, data) {
+		case "js":
+			fs.readFile(path.resolve(__dirname + "/js", pieces[2]), "utf8", function(err, data) {
 				if (err) {
 					console.log(err);
 				}
