@@ -53,6 +53,23 @@ except:
 EOF
 endfunction
 
+function! s:getConsole()
+	edit brolink/console
+
+	python <<EOF
+try:
+	data = urllib2.urlopen(vim.eval("g:bl_serverpath") + "/console").read()
+	for line in data.split("\n"):
+		vim.current.buffer.append(line)
+	
+except:
+	# who cares!
+	pass
+EOF
+	
+	setlocal nomodified
+endfunction
+
 function! s:get_visual_selection()
 	let [lnum1, col1] = getpos("'<")[1:2]
 	let [lnum2, col2] = getpos("'>")[1:2]
@@ -73,6 +90,7 @@ command!        -nargs=0 BLEvaluateWord      call s:EvaluateWord()
 command!        -nargs=1 BLEval              call s:evaluateJS(<f-args>)
 command!        -nargs=0 BLReloadPage        call s:sendCommand("reloadPage")
 command!        -nargs=0 BLReloadCSS         call s:sendCommand("reloadCSS")
+command!        -nargs=0 BLConsole         call s:getConsole()
 
 if !exists("g:bl_no_mappings")
 	vmap <silent><Leader>be :BLEvaluateSelection<CR>
