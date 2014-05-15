@@ -46,7 +46,7 @@ endfunction
 function! s:sendCommand(command)
 	python <<EOF
 try:
-	urllib2.urlopen(vim.eval("g:bl_serverpath") + "/" + vim.eval("a:command"))
+	urllib2.urlopen(vim.eval("g:bl_serverpath") + "/" + vim.eval("a:command")).read()
 except:
 	# who cares!
 	pass
@@ -84,9 +84,9 @@ command! -range -nargs=0 BLEvaluateSelection call s:EvaluateSelection()
 command!        -nargs=0 BLEvaluateBuffer    call s:EvaluateBuffer()
 command!        -nargs=0 BLEvaluateWord      call s:EvaluateWord()
 command!        -nargs=1 BLEval              call s:evaluateJS(<f-args>)
-command!        -nargs=0 BLReloadPage        call s:sendCommand("reload")
-command!        -nargs=0 BLReloadCSS         call s:sendCommand("css")
-command!        -nargs=0 BLConsoleClear         call s:sendCommand("clear")
+command!        -nargs=0 BLReloadPage        call s:sendCommand("reload/page")
+command!        -nargs=0 BLReloadCSS         call s:sendCommand("reload/css")
+command!        -nargs=0 BLConsoleClear      call s:sendCommand("clear")
 command!        -nargs=0 BLConsole           edit brolink/console
 autocmd BufReadCmd brolink/* call s:getConsole()
 

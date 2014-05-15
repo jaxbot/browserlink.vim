@@ -29,7 +29,7 @@ var server = http.createServer(function(request, response) {
 	switch (pieces[1]) {
 		case "reload":
 			broadcast(pieces[2]);
-			return;
+			break;
 		case "evaluate":
 			request.on('data', function(data) {
 				broadcast(data);
@@ -73,15 +73,17 @@ wsServer.on('request', function(request) {
 	var connection = request.accept('', request.origin);
 	console.log("Connection accepted.");
 
+	connections.push(connection);
+	var i = connections.length - 1;
+
 	connection.on('close', function(reasonCode, description) {
 		console.log("Disconnected: " + connection.remoteAddress);
+		connections.splice(i, 1);
 	});
 	connection.on('message', function(msg) {
 		console.log(msg.utf8Data);
 		consoles += msg.utf8Data;
 	});
-
-	connections.push(connection);
 });
 
 function broadcast(data) {
