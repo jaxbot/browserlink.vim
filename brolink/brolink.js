@@ -34,7 +34,7 @@ var server = http.createServer(function(request, response) {
 			request.on('data', function(data) {
 				broadcast(data);
 			});
-			return;
+			break;
 		case "js":
 			fs.readFile(path.resolve(__dirname + "/js", pieces[2]), "utf8", function(err, data) {
 				if (err) {
@@ -49,6 +49,9 @@ var server = http.createServer(function(request, response) {
 			response.writeHead(200);
 			response.end(consoles);
 			return;
+		case "clear":
+			consoles = "";
+			break;
 	}
 
 	response.writeHead(200);
