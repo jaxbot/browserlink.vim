@@ -35,7 +35,7 @@ Two options:
 
 1. Add this to your page(s)
 	
-	<script src='http://127.0.0.1:9001/socket.js'></script>
+	<script src='http://127.0.0.1:9001/js/socket.js'></script>
 
 2. **OR** Use GreaseMonkey or Tampermonkey to automatically embed in your local projects, e.g.
 
@@ -50,7 +50,7 @@ Two options:
 		// ==/UserScript==
 		
 		var src = document.createElement("script");
-		src.src = "http://127.0.0.1:9001/socket.js";
+		src.src = "http://127.0.0.1:9001/js/socket.js";
 		src.async = true;
 		document.head.appendChild(src);
 
