@@ -64,6 +64,20 @@ EOF
 	nnoremap <buffer> i :BLEval 
 	nnoremap <buffer> c :BLConsoleClear<cr>:e<cr>
 	nnoremap <buffer> r :e!<cr>
+	nnoremap <buffer> <cr> :BLTraceLine<cr>
+endfunction
+
+function! s:traceLine()
+python <<EOF
+
+line = vim.eval("getline('.')")
+fragments = line.split('/')
+page = fragments[-1].split(':')[0]
+line = fragments[-1].split(':')[1]
+
+vim.command("b " + page)
+vim.command(":" + line)
+EOF
 endfunction
 
 function! s:get_visual_selection()
@@ -88,6 +102,7 @@ command!        -nargs=0 BLReloadPage        call s:sendCommand("reload/page")
 command!        -nargs=0 BLReloadCSS         call s:sendCommand("reload/css")
 command!        -nargs=0 BLConsoleClear      call s:sendCommand("clear")
 command!        -nargs=0 BLConsole           edit brolink/console
+command!        -nargs=0 BLTraceLine         call s:traceLine()
 autocmd BufReadCmd brolink/* call s:getConsole()
 
 if !exists("g:bl_no_mappings")
