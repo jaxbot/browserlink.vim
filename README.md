@@ -1,18 +1,18 @@
 # Brolink.vim
 Brolink is a live browser editing plugin for Vim. 
-<img src='https://raw.github.com/jaxbot/brolink.vim/master/brolinkhtml.gif'>
+<img src='http://jaxbot.me/pics/brolinkhtml.gif'>
 
 ## Live edit CSS
 
 Brolink allows you to live edit CSS files, which are sent to the browser on change, without reloading or changing the state of the page.
 
-<img src='https://raw.github.com/jaxbot/brolink.vim/master/brolinkcss.gif'>
+<img src='http://jaxbot.me/pics/brolinkcss.gif'>
 
 ## Live evaluate JavaScript
 
 Brolink allows you to evaluate buffers or selections of JavaScript directly, or even call individual functions within the buffer, for instant feedback in the browser.
 
-<img src='https://raw.github.com/jaxbot/brolink.vim/master/brolinkjs.gif'>
+<img src='http://jaxbot.me/pics/brolinkjs.gif'>
 
 ## How it works
 Brolink is very simple. The plugin itself hooks autocommands for file changes (and other things) to the provided functions. The functions connect through HTTP to a node.js backend, which your webpage connects also to. The entire process happens extremely fast.
