@@ -93,6 +93,10 @@ By default as of 2.1, Brolink will not try to connect to a socket until BLStart 
 
 If set, Brolink won't try to reload pages/CSS when you save respective files.
 
+	g:bl_no_eager 
+
+If set, Brolink won't autostart the server when a command is run and the server does not respond.
+
 	g:bl_no_mappings 
 
 If set, Brolink won't map be, br, and bc commands.
