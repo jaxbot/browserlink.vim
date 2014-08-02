@@ -77,6 +77,15 @@ will evaluate the current buffer
 
 You can also use <leader>be to evaluate selections or buffers, <leader>br to reload, and <leader>bc to reload stylesheets manually.
 
+	BLConsole
+
+An experimental feature that will print out `console.log` results from the webpage into a buffer. When in console mode:
+
+* `i` - shortcut to `:BLEval`
+* `cc` - clears console buffer
+* `r` - refreshes console buffer
+* `<CR>` - attempts to load the highlighted trace line
+
 If you want to get super efficient, you can hook an autocmd to when you leave insert mode (or other times) to reload, say, the stylesheets:
 
 	au InsertLeave *.css :BLReloadCSS
