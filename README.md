@@ -85,10 +85,6 @@ This function can be easily tweaked to fit your needs/workflow, and I highly rec
 
 ## Options
 
-	g:bl_autostart 
-
-By default as of 2.1, Brolink will not try to connect to a socket until BLStart is called. Set this variable if it's safe to assume the Brolink.js server is running when Vim is started. I start Brolink in a startup script, so I use this feature. Mileage varies, of course.
-
 	g:bl_no_autoupdate 
 
 If set, Brolink won't try to reload pages/CSS when you save respective files.
