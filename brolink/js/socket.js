@@ -33,9 +33,21 @@
 		for (var i = 0; i < elements.length; i++) {
 			if (elements[i].rel == "stylesheet") {
 				var href = elements[i].getAttribute("data-href")
+
 				if (href == null) {
 					href = elements[i].href;
 					elements[i].setAttribute("data-href", href);
+				}
+
+				if (window.__BL_OVERRIDE_CACHE) {
+					var link = document.createElement("link");
+					link.href = href;
+					link.rel = "stylesheet";
+					document.head.appendChild(link);
+
+					document.head.removeChild(elements[i]);
+
+					continue;
 				}
 				elements[i].href = href + ((href.indexOf("?") == -1) ? "?" : "&") + "c=" + (new Date).getTime();
 			}
