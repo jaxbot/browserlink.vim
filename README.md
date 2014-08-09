@@ -14,10 +14,20 @@ Brolink allows you to evaluate buffers or selections of JavaScript directly, or 
 
 <img src='http://jaxbot.me/pics/brolinkjs.gif'>
 
+## New: Keep in sync with Chrome Inspector
+
+The Chrome inspector allows you to set source maps from network resources to the local filesystem. In the latest version of Brolink, you can set
+
+```
+window.__BL_OVERRIDE_CACHE = true
+```
+
+to disable the cache breaker. After setting up Chrome as desired, enable `:set autoread` and you'll get results like this:
+
+<img src='http://jaxbot.me/pics/vim/vim_brolink_sync.gif' alt='Brolink.vim staying in sync with Chrome inspector'>
+
 ## How it works
 Brolink is very simple. The plugin itself hooks autocommands for file changes (and other things) to the provided functions. The functions connect through HTTP to a node.js backend, which your webpage connects also to. The entire process happens extremely fast.
-
-Video of version 1.0: http://www.youtube.com/watch?v=w4_fkpVQbAQ (old, and much slower than current version)
 
 ## Installation and Setup
 To install, either download the repo, or as I would recommend, use [Pathogen](https://github.com/tpope/vim-pathogen).
