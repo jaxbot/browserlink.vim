@@ -33,7 +33,6 @@
 		var c = 0;
 
 		for (var i = 0; i < elements.length; i++) {
-			console.log(elements[i]);
 			if (elements[c].rel == "stylesheet") {
 				var href = elements[i].getAttribute("data-href");
 
