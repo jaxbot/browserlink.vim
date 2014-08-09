@@ -30,13 +30,16 @@
 	var reloadCSS = function () {
 		var elements = document.getElementsByTagName("link");
 
+		var c = 0;
+
 		for (var i = 0; i < elements.length; i++) {
-			if (elements[i].rel == "stylesheet") {
-				var href = elements[i].getAttribute("data-href")
+			console.log(elements[i]);
+			if (elements[c].rel == "stylesheet") {
+				var href = elements[i].getAttribute("data-href");
 
 				if (href == null) {
-					href = elements[i].href;
-					elements[i].setAttribute("data-href", href);
+					href = elements[c].href;
+					elements[c].setAttribute("data-href", href);
 				}
 
 				if (window.__BL_OVERRIDE_CACHE) {
@@ -45,12 +48,13 @@
 					link.rel = "stylesheet";
 					document.head.appendChild(link);
 
-					document.head.removeChild(elements[i]);
+					document.head.removeChild(elements[c]);
 
 					continue;
 				}
 				elements[i].href = href + ((href.indexOf("?") == -1) ? "?" : "&") + "c=" + (new Date).getTime();
 			}
+			c++;
 		}
 	}
 
