@@ -99,7 +99,11 @@ EOF
     let qfitems = []
     for errorstr in errors
         let error = eval(errorstr)
-        let qfitems = qfitems + [s:url2path(error.url) . ':' . error.lineNumber . ':' . error.message]
+        let msg = error.message
+        if error.multiplicity > 1
+            let msg = msg . ' (' . error.multiplicity . ' times)'
+        endif
+        let qfitems = qfitems + [s:url2path(error.url) . ':' . error.lineNumber . ':' . msg]
     endfor
     cexpr join(qfitems, "\n")
 endfunction
