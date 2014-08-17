@@ -1,22 +1,22 @@
-# Brolink.vim
-Brolink is a live browser editing plugin for Vim. 
+# Browserlink.vim
+Browserlink is a live browser editing plugin for Vim. Formerly **brolink.vim**.
 <img src='http://jaxbot.me/pics/brolinkhtml.gif'>
 
 ## Live edit CSS
 
-Brolink allows you to live edit CSS files, which are sent to the browser on change, without reloading or changing the state of the page.
+Browserlink allows you to live edit CSS files, which are sent to the browser on change, without reloading or changing the state of the page.
 
 <img src='http://jaxbot.me/pics/brolinkcss.gif'>
 
 ## Live evaluate JavaScript
 
-Brolink allows you to evaluate buffers or selections of JavaScript directly, or even call individual functions within the buffer, for instant feedback in the browser.
+Browserlink allows you to evaluate buffers or selections of JavaScript directly, or even call individual functions within the buffer, for instant feedback in the browser.
 
 <img src='http://jaxbot.me/pics/brolinkjs.gif'>
 
 ## New: Keep in sync with Chrome Inspector
 
-The Chrome inspector allows you to set source maps from network resources to the local filesystem. In the latest version of Brolink, you can set
+The Chrome inspector allows you to set source maps from network resources to the local filesystem. In the latest version of Browserlink, you can set
 
 ```
 window.__BL_OVERRIDE_CACHE = true
@@ -24,10 +24,10 @@ window.__BL_OVERRIDE_CACHE = true
 
 to disable the cache breaker. After setting up Chrome as desired, enable `:set autoread` and you'll get results like this:
 
-<img src='http://jaxbot.me/pics/vim/vim_brolink_sync.gif' alt='Brolink.vim staying in sync with Chrome inspector'>
+<img src='http://jaxbot.me/pics/vim/vim_brolink_sync.gif' alt='Browserlink.vim staying in sync with Chrome inspector'>
 
 ## How it works
-Brolink is very simple. The plugin itself hooks autocommands for file changes (and other things) to the provided functions. The functions connect through HTTP to a node.js backend, which your webpage connects also to. The entire process happens extremely fast.
+Browserlink is very simple. The plugin itself hooks autocommands for file changes (and other things) to the provided functions. The functions connect through HTTP to a node.js backend, which your webpage connects also to. The entire process happens extremely fast.
 
 ## Installation and Setup
 To install, either download the repo, or as I would recommend, use [Pathogen](https://github.com/tpope/vim-pathogen).
@@ -40,7 +40,7 @@ Once installed, make sure you have Node installed, and run the server program li
 
 Feel free to move (or symlink) the brolink server to a more convenient location.
 
-Once Brolink is running in a console, you need to include a reference to it in your web project.
+Once Browserlink is running in a console, you need to include a reference to it in your web project.
 Two options:
 
 1. Add this to your page(s)
@@ -51,7 +51,7 @@ Two options:
 
 
 		// ==UserScript==
-		// @name       Brolink Embed
+		// @name       Browserlink Embed
 		// @namespace  http://use.i.E.your.homepage/
 		// @version    0.1
 		// @description  enter something useful
@@ -106,15 +106,15 @@ This function can be easily tweaked to fit your needs/workflow, and I highly rec
 
 	g:bl_no_autoupdate 
 
-If set, Brolink won't try to reload pages/CSS when you save respective files.
+If set, Browserlink won't try to reload pages/CSS when you save respective files.
 
 	g:bl_no_eager 
 
-If set, Brolink won't autostart the server when a command is run and the server does not respond.
+If set, Browserlink won't autostart the server when a command is run and the server does not respond.
 
 	g:bl_no_mappings 
 
-If set, Brolink won't map be, br, and bc commands.
+If set, Browserlink won't map be, br, and bc commands.
 
 	g:bl_serverpath 
 
