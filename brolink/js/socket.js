@@ -62,8 +62,21 @@
 		log.call(console, str);
 		var err = (new Error).stack;
 		err = err.replace("Error", "").replace(/\s+at\s/g, '@').replace(/@/g, "\n@");
-
-		socket.send(str + "\n" + err + "\n\n");
+        socket.send(JSON.stringify({
+            "type"       : "log",
+            "message"    : str,
+            "stacktrace" : err
+        }));
 	}
+
+    window.onerror = function(msg, url, lineNumber) {
+        socket.send(JSON.stringify({
+            "type"       : "error",
+            "message"    : msg,
+            "url"        : url,
+            "lineNumber" : lineNumber
+        }));
+        return false;
+    }
 })();
 

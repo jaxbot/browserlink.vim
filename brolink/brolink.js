@@ -20,6 +20,7 @@ var path = require("path");
 var connections = [];
 
 var consoles = "";
+var errors   = [];
 
 var server = http.createServer(function(request, response) {
 	console.log("Requested: " + request.url);
@@ -35,6 +36,13 @@ var server = http.createServer(function(request, response) {
 				broadcast(data);
 			});
 			break;
+        case "errors":
+            response.writeHead(200);
+            response.end(errors.join('\n'));
+            break;
+        case "clearerrors":
+            errors = [];
+            break;
 		case "js":
 			fs.readFile(path.resolve(__dirname + "/js", pieces[2]), "utf8", function(err, data) {
 				if (err) {
@@ -81,8 +89,16 @@ wsServer.on('request', function(request) {
 		connections.splice(i, 1);
 	});
 	connection.on('message', function(msg) {
-		console.log(msg.utf8Data);
-		consoles += msg.utf8Data;
+        var content = JSON.parse(msg.utf8Data);
+		console.log(content);
+        switch(content.type) {
+        case 'log':
+            consoles += content.message + "\n" + content.stacktrace + "\n\n";
+            break;
+        case 'error':
+            errors.push(msg.utf8Data);
+            break;
+        }
 	});
 });
 
