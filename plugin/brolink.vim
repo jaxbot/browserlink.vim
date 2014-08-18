@@ -77,7 +77,7 @@ function! s:url2path(url)
     endif
     " translate file-URLs
     if stridx(path,'file://') == 0
-        return strpart(path,6)
+        return strpart(path,7)
     endif
     " for everything else, look up user-defined mappings
     if exists("g:bl_urlpaths")
@@ -106,6 +106,12 @@ EOF
         let qfitems = qfitems + [s:url2path(error.url) . ':' . error.lineNumber . ':' . msg]
     endfor
     cexpr join(qfitems, "\n")
+endfunction
+
+function! s:clearErrors()
+python <<EOF
+urllib2.urlopen(vim.eval("g:bl_serverpath") + "/clearerrors")
+EOF
 endfunction
 
 function! s:traceLine()
@@ -144,6 +150,7 @@ command!        -nargs=0 BLReloadCSS         call s:sendCommand("reload/css")
 command!        -nargs=0 BLConsoleClear      call s:sendCommand("clear")
 command!        -nargs=0 BLConsole           edit brolink/console
 command!        -nargs=0 BLErrors            call s:getErrors()
+command!        -nargs=0 BLClearErrors       call s:clearErrors()
 command!        -nargs=0 BLTraceLine         call s:traceLine()
 autocmd BufReadCmd brolink/console* call s:getConsole()
 
