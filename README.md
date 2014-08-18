@@ -96,6 +96,14 @@ An experimental feature that will print out `console.log` results from the webpa
 * `r` - refreshes console buffer
 * `<CR>` - attempts to load the highlighted trace line
 
+	BLErrors
+
+Load accumulated Javascript errors of the current session into the quickfix list
+
+	BLClearErrors
+
+Reset the error list.
+
 If you want to get super efficient, you can hook an autocmd to when you leave insert mode (or other times) to reload, say, the stylesheets:
 
 	au InsertLeave *.css :BLReloadCSS
@@ -119,6 +127,11 @@ If set, Browserlink won't map be, br, and bc commands.
 	g:bl_serverpath 
 
 Set if your server is not hosted on 127.0.0.1:9001. You will also need to change the socket.js file.
+
+	g:bl_urlpaths
+
+A dictionary defining mappings from URLs to filesystem paths. Set this if you want to use the
+quickfix list for pages not accessed via a file://-URL.
 
 ## Notes
 
