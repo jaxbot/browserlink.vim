@@ -95,7 +95,7 @@ python <<EOF
 data = urllib2.urlopen(vim.eval("g:bl_serverpath") + "/errors").readlines()
 vim.command("let errors = %s" % [e.strip() for e in data])
 EOF
-    set errorformat "%f|%l|%m"
+    set errorformat+=%f:%l:%m
     let qfitems = []
     for errorstr in errors
         let error = eval(errorstr)
