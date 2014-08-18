@@ -37,17 +37,17 @@ var server = http.createServer(function(request, response) {
 				broadcast(data);
 			});
 			break;
-        case "errors":
-            response.writeHead(200);
-            response.end(errors.map(function(error){
-                error.multiplicity = errorMultiplicities[error];
-                return JSON.stringify(error);
-            }).join("\n"));
-            break;
-        case "clearerrors":
-            errors = [];
-            errorMultiplicities = {};
-            break;
+		case "errors":
+			response.writeHead(200);
+			response.end(errors.map(function(error){
+				error.multiplicity = errorMultiplicities[error];
+				return JSON.stringify(error);
+			}).join("\n"));
+			break;
+		case "clearerrors":
+			errors = [];
+			errorMultiplicities = {};
+			break;
 		case "js":
 			fs.readFile(path.resolve(__dirname + "/js", pieces[2]), "utf8", function(err, data) {
 				if (err) {
@@ -94,21 +94,21 @@ wsServer.on('request', function(request) {
 		connections.splice(i, 1);
 	});
 	connection.on('message', function(msg) {
-        var content = JSON.parse(msg.utf8Data);
+		var content = JSON.parse(msg.utf8Data);
 		console.log(content);
-        switch(content.type) {
-        case 'log':
-            consoles += content.message + "\n" + content.stacktrace + "\n\n";
-            break;
-        case 'error':
-            if (errorMultiplicities.hasOwnProperty(content)) {
-                errorMultiplicities[content] += 1
-            } else {
-                errorMultiplicities[content] = 1
-                errors.push(content);
-            }
-            break;
-        }
+		switch(content.type) {
+		case 'log':
+			consoles += content.message + "\n" + content.stacktrace + "\n\n";
+			break;
+		case 'error':
+			if (errorMultiplicities.hasOwnProperty(content)) {
+				errorMultiplicities[content] += 1
+			} else {
+				errorMultiplicities[content] = 1
+				errors.push(content);
+			}
+			break;
+		}
 	});
 });
 

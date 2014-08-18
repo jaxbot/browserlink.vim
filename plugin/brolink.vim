@@ -69,25 +69,25 @@ EOF
 endfunction
 
 function! s:url2path(url)
-    let path = a:url
-    " strip off any fragment identifiers
-    let hashIdx = stridx(a:url, '#')
-    if hashIdx > -1
-        let path = strpart(path, 0, hashIdx)
-    endif
-    " translate file-URLs
-    if stridx(path,'file://') == 0
-        return strpart(path,7)
-    endif
-    " for everything else, look up user-defined mappings
-    if exists("g:bl_urlpaths")
-        for key in keys(g:bl_urlpaths)
-            if stridx(path, key) == 0
-                return g:bl_urlpaths[key] . strpart(path, strlen(key))
-            endif
-        endfor
-    endif
-    return path
+	let path = a:url
+	" strip off any fragment identifiers
+	let hashIdx = stridx(a:url, '#')
+	if hashIdx > -1
+		let path = strpart(path, 0, hashIdx)
+	endif
+	" translate file-URLs
+	if stridx(path,'file://') == 0
+		return strpart(path,7)
+	endif
+	" for everything else, look up user-defined mappings
+	if exists("g:bl_urlpaths")
+		for key in keys(g:bl_urlpaths)
+			if stridx(path, key) == 0
+				return g:bl_urlpaths[key] . strpart(path, strlen(key))
+			endif
+		endfor
+	endif
+	return path
 endfunction
 
 function! s:getErrors()
@@ -95,17 +95,17 @@ python <<EOF
 data = urllib2.urlopen(vim.eval("g:bl_serverpath") + "/errors").readlines()
 vim.command("let errors = %s" % [e.strip() for e in data])
 EOF
-    set errorformat+=%f:%l:%m
-    let qfitems = []
-    for errorstr in errors
-        let error = eval(errorstr)
-        let msg = error.message
-        if error.multiplicity > 1
-            let msg = msg . ' (' . error.multiplicity . ' times)'
-        endif
-        let qfitems = qfitems + [s:url2path(error.url) . ':' . error.lineNumber . ':' . msg]
-    endfor
-    cexpr join(qfitems, "\n")
+	set errorformat+=%f:%l:%m
+	let qfitems = []
+	for errorstr in errors
+		let error = eval(errorstr)
+		let msg = error.message
+		if error.multiplicity > 1
+			let msg = msg . ' (' . error.multiplicity . ' times)'
+		endif
+		let qfitems = qfitems + [s:url2path(error.url) . ':' . error.lineNumber . ':' . msg]
+	endfor
+	cexpr join(qfitems, "\n")
 endfunction
 
 function! s:clearErrors()
