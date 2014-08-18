@@ -20,6 +20,8 @@ var path = require("path");
 var connections = [];
 
 var consoles = "";
+var errors   = [];
+var errorMultiplicities = {};
 
 var server = http.createServer(function(request, response) {
 	console.log("Requested: " + request.url);
@@ -34,6 +36,17 @@ var server = http.createServer(function(request, response) {
 			request.on('data', function(data) {
 				broadcast(data);
 			});
+			break;
+		case "errors":
+			response.writeHead(200);
+			response.end(errors.map(function(error){
+				error.multiplicity = errorMultiplicities[error];
+				return JSON.stringify(error);
+			}).join("\n"));
+			break;
+		case "clearerrors":
+			errors = [];
+			errorMultiplicities = {};
 			break;
 		case "js":
 			fs.readFile(path.resolve(__dirname + "/js", pieces[2]), "utf8", function(err, data) {
@@ -81,8 +94,21 @@ wsServer.on('request', function(request) {
 		connections.splice(i, 1);
 	});
 	connection.on('message', function(msg) {
-		console.log(msg.utf8Data);
-		consoles += msg.utf8Data;
+		var content = JSON.parse(msg.utf8Data);
+		console.log(content);
+		switch(content.type) {
+		case 'log':
+			consoles += content.message + "\n" + content.stacktrace + "\n\n";
+			break;
+		case 'error':
+			if (errorMultiplicities.hasOwnProperty(content)) {
+				errorMultiplicities[content] += 1
+			} else {
+				errorMultiplicities[content] = 1
+				errors.push(content);
+			}
+			break;
+		}
 	});
 });
 
