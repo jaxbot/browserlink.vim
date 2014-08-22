@@ -9,6 +9,46 @@
 	// Change port/address if needed 
 	var socket = new WebSocket("ws://127.0.0.1:9001/");
 
+	// Function to handle visible/non-visible. From http://stackoverflow.com/a/19519701
+	var visible = (function(){
+		// Determine the state and event keys.
+		var stateKey, eventKey, keys = {
+			hidden: "visibilitychange",
+			webkitHidden: "webkitvisibilitychange",
+			mozHidden: "mozvisibilitychange",
+			msHidden: "msvisibilitychange"
+		};
+		for (stateKey in keys) {
+			if (stateKey in document) {
+				eventKey = keys[stateKey];
+				break;
+			}
+		}
+
+		// Build the function using this key.
+		vis = function(cb) {
+			// If one is given, register a callback.
+			if (cb) {
+				document.addEventListener(eventKey, function() {
+					cb(vis()); 
+				});
+			}
+
+			// Return the current state.
+			return !document[stateKey];
+		}
+		return vis;
+	})();
+
+	// Listen for window visible and non-visible.
+	var pendingReload = false;
+	visible(function(vis) {
+		if (vis && pendingReload) {
+			window.location.reload();
+			pendingReload = false;
+		}
+	});
+
 	socket.onopen = function(evt) {  };
 	socket.onclose = function(evt) {  };
 	socket.onmessage = function(evt) { 
@@ -17,7 +57,11 @@
 				reloadCSS();
 			break;
 			case "page":
-				window.location.reload();
+				if (visible()) {
+					window.location.reload();
+				} else {
+					pendingReload = true;
+				}
 			break;
 			default:
 				console.log(evt.data);
