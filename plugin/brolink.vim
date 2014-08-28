@@ -51,7 +51,11 @@ EOF
 endfunction
 
 function! s:startBrolink()
-	call system("cd " . s:path . "/../brolink && ./start.sh &")
+	if has("win32")
+		call system("cd " . s:path . "/../brolink && ./start.bat")
+	else
+		call system("cd " . s:path . "/../brolink && ./start.sh &")
+	endif
 endfunction
 
 function! s:getConsole()
