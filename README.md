@@ -32,40 +32,45 @@ Browserlink is very simple. The plugin itself hooks autocommands for file change
 ## Installation and Setup
 To install, either download the repo, or as I would recommend, use [Pathogen](https://github.com/tpope/vim-pathogen).
 
-	git clone git://github.com/jaxbot/brolink.vim.git
+```
+git clone git://github.com/jaxbot/brolink.vim.git
+```
 
-Once installed, make sure you have Node installed, and run the server program like so:
+If you haven't already, you'll need to install [Node.js](http://nodejs.org/) (Node is used to send refresh commands to your page(s))
 
-	node brolink.js
+Lastly, you need some javascript on your page(s) to listen for the refresh commands.  For this there are two options:
 
-Feel free to move (or symlink) the brolink server to a more convenient location.
+1. Add this script to your page(s)
 
-Once Browserlink is running in a console, you need to include a reference to it in your web project.
-Two options:
+```
+<script src='http://127.0.0.1:9001/js/socket.js'></script>
+```
 
-1. Add this to your page(s)
-	
-	<script src='http://127.0.0.1:9001/js/socket.js'></script>
+2. **OR** Use a GreaseMonkey script to inject the javascript into your project:
 
-2. **OR** Use GreaseMonkey or Tampermonkey to automatically embed in your local projects, e.g.
+Userscript injection extensions/solutions:
+* [Chromium's built in support](http://www.chromium.org/developers/design-documents/user-scripts)
+* [TamperMonkey Chrome extension](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)
+* [Greasemonkey Firefox extension](https://addons.mozilla.org/firefox/addon/greasemonkey/)
 
+Userscript template (update the [@match rule](https://developer.chrome.com/extensions/match_patterns) to the url of your local project):
+```
+// ==UserScript==
+// @name       Browserlink Embed
+// @namespace  http://use.i.E.your.homepage/
+// @version    0.1
+// @description  enter something useful
+// @match      http://localhost/*
+// @copyright  2012+, You
+// ==/UserScript==
 
-		// ==UserScript==
-		// @name       Browserlink Embed
-		// @namespace  http://use.i.E.your.homepage/
-		// @version    0.1
-		// @description  enter something useful
-		// @match      http://localhost/*
-		// @copyright  2012+, You
-		// ==/UserScript==
-		
-		var src = document.createElement("script");
-		src.src = "http://127.0.0.1:9001/js/socket.js";
-		src.async = true;
-		document.head.appendChild(src);
+var src = document.createElement("script");
+src.src = "http://127.0.0.1:9001/js/socket.js";
+src.async = true;
+document.head.appendChild(src);
+```
 
-
-I prefer the latter, as it's more universal and I don't have extra development junk in my projects. But it's totally up to you.
+I prefer the GreaseMonkey/Userscript method, as it's more universal and I don't have extra development junk in my projects. But it's totally up to you.
 
 ## Usage
 
@@ -73,21 +78,21 @@ Once set up, Vim should now call the Node server whenever you save a .html, .js,
 
 In addition:
 
-	BLReloadPage
+`:BLReloadPage`
 
 will reload the current pages
 
-	BLReloadCSS
+`:BLReloadCSS`
 
-will reload the current stylesheets 
+will reload the current stylesheets
 
-	BLEvaluateBuffer
+`:BLEvaluateBuffer`
 
 will evaluate the current buffer
 
 You can also use <leader>be to evaluate selections or buffers, <leader>br to reload, and <leader>bc to reload stylesheets manually.
 
-	BLConsole
+`:BLConsole`
 
 An experimental feature that will print out `console.log` results from the webpage into a buffer. When in console mode:
 
@@ -96,39 +101,39 @@ An experimental feature that will print out `console.log` results from the webpa
 * `r` - refreshes console buffer
 * `<CR>` - attempts to load the highlighted trace line
 
-	BLErrors
+`:BLErrors`
 
 Load accumulated Javascript errors of the current session into the quickfix list
 
-	BLClearErrors
+`:BLClearErrors`
 
 Reset the error list.
 
 If you want to get super efficient, you can hook an autocmd to when you leave insert mode (or other times) to reload, say, the stylesheets:
 
-	au InsertLeave *.css :BLReloadCSS
+`au InsertLeave *.css :BLReloadCSS`
 
 This function can be easily tweaked to fit your needs/workflow, and I highly recommend you do so to maximize your utility from this plugin.
 
 ## Options
 
-	g:bl_no_autoupdate 
+`g:bl_no_autoupdate`
 
 If set, Browserlink won't try to reload pages/CSS when you save respective files.
 
-	g:bl_no_eager 
+`g:bl_no_eager`
 
 If set, Browserlink won't autostart the server when a command is run and the server does not respond.
 
-	g:bl_no_mappings 
+`g:bl_no_mappings`
 
 If set, Browserlink won't map be, br, and bc commands.
 
-	g:bl_serverpath 
+`g:bl_serverpath`
 
 Set if your server is not hosted on 127.0.0.1:9001. You will also need to change the socket.js file.
 
-	g:bl_urlpaths
+`g:bl_urlpaths`
 
 A dictionary defining mappings from URLs to filesystem paths. Set this if you want to use the
 quickfix list for pages not accessed via a file://-URL.
