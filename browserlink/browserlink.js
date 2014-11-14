@@ -1,12 +1,12 @@
 #!/usr/bin/nodejs
-// Brolink.js
-// The server for brolink.vim
+// Browserlink.js
+// The server for browserlink.vim
 // By Jonathan Warner, 2014
-// http://github.com/jaxbot/brolink.vim
+// http://github.com/jaxbot/browserlink.vim
 
-var VERSION = "2.5.0";
+var VERSION = "2.6.0";
 
-console.log("Brolink");
+console.log("Browserlink");
 console.log("Server version: " + VERSION);
 console.log("======================");
 console.log("Dedicated to everyone who missed the first chest in OOT's Forest Temple");
@@ -25,7 +25,7 @@ var errorMultiplicities = {};
 
 var server = http.createServer(function(request, response) {
 	console.log("Requested: " + request.url);
-	
+
 	var pieces = request.url.split("/");
 
 	switch (pieces[1]) {
@@ -68,7 +68,7 @@ var server = http.createServer(function(request, response) {
 	}
 
 	response.writeHead(200);
-	response.end("Brolink " + VERSION);
+	response.end("Browserlink " + VERSION);
 
 });
 

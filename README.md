@@ -33,7 +33,7 @@ Browserlink is very simple. The plugin itself hooks autocommands for file change
 To install, either download the repo, or as I would recommend, use [Pathogen](https://github.com/tpope/vim-pathogen).
 
 ```
-git clone git://github.com/jaxbot/brolink.vim.git
+git clone git://github.com/jaxbot/browserlink.vim.git
 ```
 
 If you haven't already, you'll need to install [Node.js](http://nodejs.org/) (Node is used to send refresh commands to your page(s))

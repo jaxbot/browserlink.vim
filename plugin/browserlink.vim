@@ -1,9 +1,9 @@
-" File:        brolink.vim
+" File:        browserlink.vim
 " Version:     2.6.0
 " Description: Links VIM to your browser for live/responsive editing.
 " Maintainer:  Jonathan Warner <jaxbot@gmail.com> <http://github.com/jaxbot>
 " Homepage:    http://jaxbot.me/
-" Repository:  https://github.com/jaxbot/brolink.vim
+" Repository:  https://github.com/jaxbot/browserlink.vim
 " License:     Copyright (C) 2014 Jonathan Warner
 "              Released under the MIT license
 "			   ======================================================================
@@ -46,15 +46,15 @@ function! s:sendCommand(command)
 try:
 	urllib2.urlopen(vim.eval("g:bl_serverpath") + "/" + vim.eval("a:command")).read()
 except:
-	vim.command("call s:startBrolink()")
+	vim.command("call s:startBrowserlink()")
 EOF
 endfunction
 
-function! s:startBrolink()
+function! s:startBrowserlink()
 	if has("win32")
-		call system("cd " . s:path . "/../brolink && ./start.bat")
+		call system("cd " . s:path . "/../browserlink && ./start.bat")
 	else
-		call system("cd " . s:path . "/../brolink && ./start.sh &")
+		call system("cd " . s:path . "/../browserlink && ./start.sh &")
 	endif
 endfunction
 
@@ -152,11 +152,11 @@ command!        -nargs=1 BLEval              call s:evaluateJS(<f-args>)
 command!        -nargs=0 BLReloadPage        call s:sendCommand("reload/page")
 command!        -nargs=0 BLReloadCSS         call s:sendCommand("reload/css")
 command!        -nargs=0 BLConsoleClear      call s:sendCommand("clear")
-command!        -nargs=0 BLConsole           edit brolink/console
+command!        -nargs=0 BLConsole           edit browserlink/console
 command!        -nargs=0 BLErrors            call s:getErrors()
 command!        -nargs=0 BLClearErrors       call s:clearErrors()
 command!        -nargs=0 BLTraceLine         call s:traceLine()
-autocmd BufReadCmd brolink/console* call s:getConsole()
+autocmd BufReadCmd browserlink/console* call s:getConsole()
 
 if !exists("g:bl_no_mappings")
 	vmap <silent><Leader>be :BLEvaluateSelection<CR>
