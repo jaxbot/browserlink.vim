@@ -54,7 +54,7 @@ function! s:startBrowserlink()
 	if has("win32")
 		call system("cd " . s:path . "/../browserlink && ./start.bat")
 	else
-		call system("cd " . s:path . "/../browserlink && ./start.sh &")
+		echo system("cd " . s:path . "/../browserlink && node browserlink.js &")
 	endif
 endfunction
 
