@@ -1,6 +1,6 @@
 # Browserlink.vim
 Browserlink is a live browser editing plugin for Vim. Formerly **brolink.vim**.
-<img src='http://jaxbot.me/pics/brolinkhtml.gif'>
+<img src='http://jaxbot.me/pics/browserlink_html.gif'>
 
 ## Live edit CSS
 
