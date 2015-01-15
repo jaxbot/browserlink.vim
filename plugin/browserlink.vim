@@ -66,7 +66,7 @@ for line in data.split("\n"):
 	vim.current.buffer.append(line)
 EOF
 	setlocal nomodified
-	nnoremap <buffer> i :BLEval 
+	nnoremap <buffer> i :BLEval
 	nnoremap <buffer> cc :BLConsoleClear<cr>:e<cr>
 	nnoremap <buffer> r :e!<cr>
 	nnoremap <buffer> <cr> :BLTraceLine<cr>
@@ -142,7 +142,7 @@ endfunction
 
 function! s:setupHandlers()
 	au BufWritePost *.html,*.htm,*.js,*.php :BLReloadPage
-	au BufWritePost *.css :BLReloadCSS	
+	au BufWritePost *.css :BLReloadCSS
 endfunction
 
 command! -range -nargs=0 BLEvaluateSelection call s:EvaluateSelection()
