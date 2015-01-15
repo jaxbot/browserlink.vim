@@ -126,7 +126,6 @@ endfunction
 
 function! browserlink#reloadPage()
 	if index(g:bl_pagefiletypes, &ft) >= 0
-		echom "DOING IT"
 		call browserlink#sendCommand("reload/page")
 	endif
 endfunction
