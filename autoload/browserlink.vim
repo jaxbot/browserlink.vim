@@ -36,9 +36,9 @@ endfunction
 
 function! browserlink#startBrowserlink()
 	if has("win32")
-		call system("cd " . browserlink#path . "/../browserlink && ./start.bat")
+		call system("cd " . s:path . "/../browserlink && ./start.bat")
 	else
-		echo system("cd " . browserlink#path . "/../browserlink && node browserlink.js &")
+		echo system("cd " . s:path . "/../browserlink && node browserlink.js &")
 	endif
 endfunction
 
@@ -124,7 +124,14 @@ function! browserlink#get_visual_selection()
 	return join(lines, " ")
 endfunction
 
+function! browserlink#reloadPage()
+	if index(g:bl_pagefiletypes, &ft) >= 0
+		echom "DOING IT"
+		call browserlink#sendCommand("reload/page")
+	endif
+endfunction
+
 function! browserlink#setupHandlers()
-	au BufWritePost *.html,*.htm,*.js,*.php :BLReloadPage
+	au BufWritePost * call browserlink#reloadPage()
 	au BufWritePost *.css :BLReloadCSS
 endfunction

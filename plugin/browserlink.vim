@@ -13,7 +13,12 @@ if !exists("g:bl_serverpath")
 	let g:bl_serverpath = "http://127.0.0.1:9001"
 endif
 
+if !exists("g:bl_pagefiletypes")
+	let g:bl_pagefiletypes = ["html", "javascript", "php"]
+endif
+
 let g:bl_state = 0
+
 command! -range -nargs=0 BLEvaluateSelection call browserlink#EvaluateSelection()
 command!        -nargs=0 BLEvaluateBuffer    call browserlink#EvaluateBuffer()
 command!        -nargs=0 BLEvaluateWord      call browserlink#EvaluateWord()
