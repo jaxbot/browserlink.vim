@@ -36,9 +36,9 @@ endfunction
 
 function! browserlink#startBrowserlink()
 	if has("win32")
-		call system("cd " . browserlink#path . "/../browserlink && ./start.bat")
+		call system("cd " . s:path . "/../browserlink && ./start.bat")
 	else
-		echo system("cd " . browserlink#path . "/../browserlink && node browserlink.js &")
+		echo system("cd " . s:path . "/../browserlink && node browserlink.js &")
 	endif
 endfunction
 
