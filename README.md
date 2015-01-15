@@ -138,6 +138,11 @@ Set if your server is not hosted on 127.0.0.1:9001. You will also need to change
 A dictionary defining mappings from URLs to filesystem paths. Set this if you want to use the
 quickfix list for pages not accessed via a file://-URL.
 
+`g:bl_pagefiletypes`
+
+A list of filetype strings that should trigger automatic page reloads on write.
+Defaults to `['html', 'javascript', 'php']`.
+
 ## Notes
 
 This is an experimental project, but it works really well for me, and I hope you enjoy it! I kept the source as simple as possible, and it's pretty easy to edit to your needs. I'm open to any suggestions, too, so let me know.
