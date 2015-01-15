@@ -102,9 +102,9 @@ wsServer.on('request', function(request) {
 			break;
 		case 'error':
 			if (errorMultiplicities.hasOwnProperty(content)) {
-				errorMultiplicities[content] += 1
+				errorMultiplicities[content] += 1;
 			} else {
-				errorMultiplicities[content] = 1
+				errorMultiplicities[content] = 1;
 				errors.push(content);
 			}
 			break;
