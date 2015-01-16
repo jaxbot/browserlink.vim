@@ -123,8 +123,3 @@ function! browserlink#get_visual_selection()
 	let lines[0] = lines[0][col1 - 1:]
 	return join(lines, " ")
 endfunction
-
-function! browserlink#setupHandlers()
-	au BufWritePost *.html,*.htm,*.js,*.php :BLReloadPage
-	au BufWritePost *.css :BLReloadCSS
-endfunction

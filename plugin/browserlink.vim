@@ -35,8 +35,14 @@ if !exists("g:bl_no_mappings")
 	nmap <silent><Leader>bc :BLReloadCSS<CR>
 endif
 
+
+function! s:setupHandlers()
+	au BufWritePost *.html,*.htm,*.js,*.php :BLReloadPage
+	au BufWritePost *.css :BLReloadCSS
+endfunction
+
 if !exists("g:bl_no_autoupdate")
-	call browserlink#setupHandlers()
+	call s:setupHandlers()
 endif
 
 if !exists("g:bl_no_eager")
