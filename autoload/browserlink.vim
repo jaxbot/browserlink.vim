@@ -123,14 +123,3 @@ function! browserlink#get_visual_selection()
 	let lines[0] = lines[0][col1 - 1:]
 	return join(lines, " ")
 endfunction
-
-function! browserlink#reloadPage()
-	if index(g:bl_pagefiletypes, &ft) >= 0
-		call browserlink#sendCommand("reload/page")
-	endif
-endfunction
-
-function! browserlink#setupHandlers()
-	au BufWritePost * call browserlink#reloadPage()
-	au BufWritePost *.css :BLReloadCSS
-endfunction

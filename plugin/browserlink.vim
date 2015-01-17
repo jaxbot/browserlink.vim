@@ -40,8 +40,19 @@ if !exists("g:bl_no_mappings")
 	nmap <silent><Leader>bc :BLReloadCSS<CR>
 endif
 
+function! s:autoReload()
+	if index(g:bl_pagefiletypes, &ft) >= 0
+		call browserlink#sendCommand("reload/page")
+	endif
+endfunction
+
+function! s:setupHandlers()
+	au BufWritePost * call s:autoReload()
+	au BufWritePost *.css :BLReloadCSS
+endfunction
+
 if !exists("g:bl_no_autoupdate")
-	call browserlink#setupHandlers()
+	call s:setupHandlers()
 endif
 
 if !exists("g:bl_no_eager")

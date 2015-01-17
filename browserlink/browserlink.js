@@ -1,7 +1,7 @@
 #!/usr/bin/nodejs
 // Browserlink.js
 // The server for browserlink.vim
-// By Jonathan Warner, 2014
+// By Jonathan Warner, 2015
 // http://github.com/jaxbot/browserlink.vim
 
 var VERSION = "2.6.0";
