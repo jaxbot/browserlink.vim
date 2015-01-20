@@ -101,16 +101,18 @@
 		}
 	}
 
-	var log = console.log;
-	console.log = function(str) {
-		log.call(console, str);
-		var err = (new Error).stack;
-		err = err.replace("Error", "").replace(/\s+at\s/g, '@').replace(/@/g, "\n@");
-		socket.send(JSON.stringify({
-			"type"       : "log",
-			"message"    : str,
-			"stacktrace" : err
-		}));
+	if (!window.__BL_NO_CONSOLE_OVERRIDE) {
+		var log = console.log;
+		console.log = function(str) {
+			log.call(console, str);
+			var err = (new Error).stack;
+			err = err.replace("Error", "").replace(/\s+at\s/g, '@').replace(/@/g, "\n@");
+			socket.send(JSON.stringify({
+				"type"       : "log",
+				"message"    : str,
+				"stacktrace" : err
+			}));
+		}
 	}
 
 	window.onerror = function(msg, url, lineNumber) {

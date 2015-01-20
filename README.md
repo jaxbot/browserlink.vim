@@ -26,6 +26,8 @@ to disable the cache breaker. After setting up Chrome as desired, enable `:set a
 
 <img src='http://jaxbot.me/pics/vim/vim_brolink_sync.gif' alt='Browserlink.vim staying in sync with Chrome inspector'>
 
+I
+
 ## How it works
 Browserlink is very simple. The plugin itself hooks autocommands for file changes (and other things) to the provided functions. The functions connect through HTTP to a node.js backend, which your webpage connects also to. The entire process happens extremely fast.
 
@@ -100,6 +102,12 @@ An experimental feature that will print out `console.log` results from the webpa
 * `cc` - clears console buffer
 * `r` - refreshes console buffer
 * `<CR>` - attempts to load the highlighted trace line
+
+If you want to disable the overriding of `console.log` on your page, set:
+
+```
+window.__BL_NO_CONSOLE_OVERRIDE = true
+```
 
 `:BLErrors`
 
