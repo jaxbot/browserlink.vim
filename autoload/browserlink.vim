@@ -1,4 +1,4 @@
-let s:path = expand('<sfile>:p:h')
+let s:path = expand('<sfile>:p:h:h')
 
 python <<NOMAS
 import sys
@@ -36,9 +36,11 @@ endfunction
 
 function! browserlink#startBrowserlink()
 	if has("win32")
-		call system("cd " . s:path . "/../browserlink && ./start.bat")
+		execute 'cd' fnameescape(s:path . "/browserlink")
+		call system("./start.bat")
 	else
-		echo system("cd " . s:path . "/../browserlink && node browserlink.js &")
+		execute 'cd' fnameescape(s:path . "/browserlink")
+		call system("node browserlink.js &")
 	endif
 endfunction
 
