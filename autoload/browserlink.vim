@@ -38,9 +38,11 @@ function! browserlink#startBrowserlink()
 	if has("win32")
 		execute 'cd' fnameescape(s:path . "/browserlink")
 		call system("./start.bat")
+		execute 'cd -'
 	else
 		execute 'cd' fnameescape(s:path . "/browserlink")
 		call system("node browserlink.js &")
+		execute 'cd -'
 	endif
 endfunction
 
