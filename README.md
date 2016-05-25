@@ -38,19 +38,12 @@ git clone git://github.com/jaxbot/browserlink.vim.git
 
 If you haven't already, you'll need to install [Node.js](http://nodejs.org/) (Node is used to send refresh commands to your page(s))
 
-You also need to install the following NPM packages:
-
-[websocket](https://www.npmjs.com/package/websocket)
-[fs](https://www.npmjs.com/package/fs)
-[path](https://www.npmjs.com/package/path)
-[http](https://www.npmjs.com/package/http)
-
-You can do so like this:
+You also need to install the NPM package [websocket](https://www.npmjs.com/package/websocket)
 
 ```
 npm install -g websocket
 ```
-etc., or with a package.json.
+or run `npm install` from the node_modules directory included in this package.
 
 Lastly, you need some javascript on your page(s) to listen for the refresh commands.  For this there are two options:
 
