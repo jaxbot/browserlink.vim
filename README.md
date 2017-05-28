@@ -127,6 +127,12 @@ This function can be easily tweaked to fit your needs/workflow, and I highly rec
 
 If set, Browserlink won't try to reload pages/CSS when you save respective files.
 
+`g:bl_no_css_reload`
+
+If set, Browserlink won't reload css files, but it still will reload pages
+with other filetypes like html or javascript (as specified by
+g:bl_pagefiletypes below).
+
 `g:bl_no_eager`
 
 If set, Browserlink won't autostart the server when a command is run and the server does not respond.
