@@ -1,3 +1,7 @@
+# Looking for a new owner
+
+This plugin was much fun to build but it clearly needs more love than I am able to devote right now. If someone would like to take ownership of the project, email me or file a bug.
+
 # Browserlink.vim
 Browserlink is a live browser editing plugin for Vim.
 <img src='http://jaxbot.me/pics/browserlink_html.gif'>
