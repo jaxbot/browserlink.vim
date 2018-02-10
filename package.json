@@ -1,0 +1,37 @@
+{
+  "name": "browserlink.vim",
+  "version": "2.6.0",
+  "description": "Live browser editing for Vim",
+  "main": "browserlink/browserlink.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "dependencies": {
+    "websocketserver":"*",
+    "http":"*",
+    "fs":"*",
+    "path":"*"
+
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaxbot/browserlink.vim.git"
+  },
+  "keywords": [
+    "vim",
+    "html",
+    "css",
+    "js",
+    "php",
+    "nodejs"
+  ],
+  "author": "jaxbot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jaxbot/browserlink.vim/issues"
+  },
+  "homepage": "https://github.com/jaxbot/browserlink.vim#readme"
+}

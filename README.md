@@ -40,7 +40,12 @@ To install, either download the repo, or as I would recommend, use [Pathogen](ht
 git clone git://github.com/jaxbot/browserlink.vim.git
 ```
 
-If you haven't already, you'll need to install [Node.js](http://nodejs.org/) (Node is used to send refresh commands to your page(s))
+If you haven't already, you'll need to install [Node.js](http://nodejs.org/)
+(Node is used to send refresh commands to your page(s)) and
+[npm](https://www.npmjs.com) (Node Packet Manager, which manages 
+dependencies for Node.js apps)
+
+Next, navigate to where you cloned browserlink.vim and run `npm install` 
 
 Lastly, you need some javascript on your page(s) to listen for the refresh commands.  For this there are two options:
 
