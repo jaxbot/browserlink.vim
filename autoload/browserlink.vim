@@ -41,7 +41,7 @@ function! browserlink#startBrowserlink()
 		execute 'cd -'
 	else
 		execute 'cd' fnameescape(s:path . "/browserlink")
-		call system("node browserlink.js &")
+		call system("node browserlink.js >> /dev/null 2>&1 &")
 		execute 'cd -'
 	endif
 endfunction
