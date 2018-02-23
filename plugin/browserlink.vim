@@ -48,7 +48,9 @@ endfunction
 
 function! s:setupHandlers()
 	au BufWritePost * call s:autoReload()
-	au BufWritePost *.css :BLReloadCSS
+	if !exists("g:bl_no_css_reload")
+		au BufWritePost *.css :BLReloadCSS
+	endif
 endfunction
 
 if !exists("g:bl_no_autoupdate")
