@@ -1,13 +1,32 @@
 let s:path = expand('<sfile>:p:h:h')
 
-python <<NOMAS
+function! s:UsingPython3()
+    if has('python3')
+        return 1
+    endif
+    return 0
+endfunction
+
+let s:using_python3 = s:UsingPython3()
+let s:python_until_eof = s:using_python3 ? "python3 << EOF" : "python << EOF"
+
+exec s:python_until_eof
 import sys
 import time
-import urllib2
 import vim
 import os
 import subprocess
-NOMAS
+EOF
+
+if has('python3')
+    exec s:python_until_eof
+from urllib.request import urlopen, Request
+EOF
+else
+    exec s:python_until_eof
+from urllib2 import urlopen, Request
+EOF
+endif
 
 function! browserlink#EvaluateSelection()
 	call browserlink#evaluateJS(browserlink#get_visual_selection())
@@ -22,13 +41,13 @@ function! browserlink#EvaluateWord()
 endfunction
 
 function! browserlink#evaluateJS(js)
-	python urllib2.urlopen(urllib2.Request(vim.eval("g:bl_serverpath") + "/evaluate", vim.eval("a:js")))
+	python urlopen(Request(vim.eval("g:bl_serverpath") + "/evaluate", vim.eval("a:js")))
 endfunction
 
 function! browserlink#sendCommand(command)
-	python <<EOF
+    exec s:python_until_eof
 try:
-	urllib2.urlopen(vim.eval("g:bl_serverpath") + "/" + vim.eval("a:command")).read()
+	urlopen(vim.eval("g:bl_serverpath") + "/" + vim.eval("a:command")).read()
 except:
 	vim.command("call browserlink#startBrowserlink()")
 EOF
@@ -48,8 +67,8 @@ endfunction
 
 function! browserlink#getConsole()
 	normal ggdG
-python <<EOF
-data = urllib2.urlopen(vim.eval("g:bl_serverpath") + "/console").read()
+    exec s:python_until_eof
+data = urlopen(vim.eval("g:bl_serverpath") + "/console").read()
 for line in data.split("\n"):
 	vim.current.buffer.append(line)
 EOF
@@ -83,7 +102,7 @@ function! browserlink#url2path(url)
 endfunction
 
 function! browserlink#getErrors()
-python <<EOF
+    exec s:python_until_eof
 data = urllib2.urlopen(vim.eval("g:bl_serverpath") + "/errors").readlines()
 vim.command("let errors = %s" % [e.strip() for e in data])
 EOF
@@ -101,14 +120,13 @@ EOF
 endfunction
 
 function! browserlink#clearErrors()
-python <<EOF
+    exec s:python_until_eof
 urllib2.urlopen(vim.eval("g:bl_serverpath") + "/clearerrors")
 EOF
 endfunction
 
 function! browserlink#traceLine()
-python <<EOF
-
+    exec s:python_until_eof
 line = vim.eval("getline('.')")
 fragments = line.split('/')
 page = fragments[-1].split(':')[0]
